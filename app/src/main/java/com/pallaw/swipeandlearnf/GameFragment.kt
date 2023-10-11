@@ -17,6 +17,7 @@ import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
+import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeableMethod
 
 
@@ -59,6 +60,13 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
             setOverlayInterpolator(LinearInterpolator())
         }
 
+        layoutManager.setStackFrom(StackFrom.Bottom)
+        layoutManager.setVisibleCount(3)
+        layoutManager.setTranslationInterval(8.0f)
+        layoutManager.setScaleInterval(0.95f)
+
+        layoutManager.setMaxDegree(40.0f)
+
         binding.stackView.layoutManager = layoutManager
         binding.stackView.adapter = adapter
         binding.stackView.itemAnimator.apply {
@@ -95,6 +103,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     }
 
     override fun onCardSwiped(direction: Direction?) {
+
     }
 
     override fun onCardRewound() {
@@ -111,4 +120,5 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
 
     override fun onVideoClicked(contentData: CardQuestionData?) {
     }
+
 }
