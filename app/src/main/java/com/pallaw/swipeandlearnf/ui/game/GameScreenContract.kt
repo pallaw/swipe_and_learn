@@ -1,11 +1,12 @@
 package com.pallaw.swipeandlearnf.ui.game
 
-import com.pallaw.swipeandlearnf.data.model.QuestionDto
+import com.pallaw.swipeandlearnf.domain.model.Question
 
-class GameContract {
+class GameScreenContract {
 
     // View actions
     public sealed class Event {
+        object GetUserData : Event()
         object GetQuestions : Event()
         class QuestionSwiped(val response: Boolean) : Event()
         object HintClicked : Event()
@@ -19,7 +20,7 @@ class GameContract {
     // state for UI data
     data class State(
         val loading: Boolean = true,
-        val questions: List<QuestionDto> = emptyList(),
+        val questions: List<Question> = emptyList(),
         val hintCount: Int = 0,
         val skipCount: Int = 0,
         val streakCount: Int = 0,

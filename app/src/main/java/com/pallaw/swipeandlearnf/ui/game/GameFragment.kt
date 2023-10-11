@@ -13,9 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.databinding.FragmentGameBinding
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.StringBuilder
 
 
 /**
@@ -25,7 +25,7 @@ class GameFragment : Fragment() {
 
     private var _binding: FragmentGameBinding? = null
     private val binding get() = _binding!!
-    private val gameViewModel: GameViewModel by viewModel()
+    private val viewModel: GameViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,21 +47,31 @@ class GameFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            gameViewModel.uiState.collect { gameState ->
-                println(gameState)
+            viewModel.uiState.collect { gameState ->
+                showUiState(gameState)
             }
         }
 
         lifecycleScope.launch {
-            gameViewModel.effect.collect{sideEffects ->
+            viewModel.effect.collect{ sideEffects ->
                 when(sideEffects) {
-                    GameContract.Effect.NavigateToRewards -> {
+                    GameScreenContract.Effect.NavigateToRewards -> {
                         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                     }
                 }
 
             }
         }
+    }
+
+    private fun showUiState(gameState: GameScreenContract.State) {
+        val previousText = binding.textviewFirst.text
+
+        binding.textviewFirst.text = StringBuilder().apply {
+            append(previousText)
+            append("\n\n")
+            append("$gameState")
+        }.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -72,7 +82,7 @@ class GameFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_rewards -> {
-                gameViewModel.setEvent(GameContract.Event.RewardClicked)
+                viewModel.setEvent(GameScreenContract.Event.RewardClicked)
                 true
             }
 

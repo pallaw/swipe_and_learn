@@ -1,66 +1,72 @@
 package com.pallaw.swipeandlearnf.ui.game
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pallaw.swipeandlearnf.base.BaseViewModel
 import com.pallaw.swipeandlearnf.domain.GameRepository
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import com.pallaw.swipeandlearnf.domain.model.Reward
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class GameViewModel(
     val gameRepository: GameRepository
-) : ViewModel() {
-
-    private val _uiState = MutableStateFlow(GameContract.State())
-    val uiState = _uiState.asStateFlow()
-
-    private val _event = MutableSharedFlow<GameContract.Event>()
-    val event = _event.asSharedFlow()
-
-    private val _effect: Channel<GameContract.Effect> = Channel()
-    val effect = _effect.receiveAsFlow()
+) : BaseViewModel<GameScreenContract.State, GameScreenContract.Event, GameScreenContract.Effect>() {
 
     init {
-        subscribeEvents()
+        setEvent(GameScreenContract.Event.GetUserData)
+        setEvent(GameScreenContract.Event.GetQuestions)
     }
 
-    private fun subscribeEvents() {
-        viewModelScope.launch {
-            event.collect {
-                handleEvent(it)
-            }
-        }
+    override fun createInitialState(): GameScreenContract.State {
+        return GameScreenContract.State(loading = true)
     }
 
-    private fun handleEvent(event: GameContract.Event) {
+    override fun handleEvent(event: GameScreenContract.Event) {
         when (event) {
-            GameContract.Event.ChooseSubjectClicked -> TODO()
-            GameContract.Event.GetQuestions -> TODO()
-            GameContract.Event.HintClicked -> TODO()
-            is GameContract.Event.QuestionSwiped -> TODO()
-            GameContract.Event.RestartClicked -> TODO()
-            GameContract.Event.RewardClicked -> {
-                setEffect { GameContract.Effect.NavigateToRewards }
+            GameScreenContract.Event.ChooseSubjectClicked -> TODO()
+            GameScreenContract.Event.GetQuestions -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    gameRepository.getQuestions().collectLatest { questions ->
+                        withContext(Dispatchers.Main) {
+                            setState {
+                                this.copy(
+                                    loading = false,
+                                    questions = questions
+                                )
+                            }
+                        }
+                    }
+                }
             }
-            GameContract.Event.SkipClicked -> TODO()
+
+            GameScreenContract.Event.HintClicked -> TODO()
+            is GameScreenContract.Event.QuestionSwiped -> TODO()
+            GameScreenContract.Event.RestartClicked -> TODO()
+            GameScreenContract.Event.RewardClicked -> {
+                setEffect { GameScreenContract.Effect.NavigateToRewards }
+            }
+
+            GameScreenContract.Event.SkipClicked -> TODO()
+            GameScreenContract.Event.GetUserData -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    gameRepository.getUserData().collectLatest { userData ->
+                        withContext(Dispatchers.Main) {
+                            setState {
+                                this.copy(
+                                    loading = false,
+                                    diamondsCount = userData.rewards.filter { it.type == Reward.Type.DIAMOND }
+                                        .sumOf { it.count },
+                                    streakCount = userData.streakCount
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    fun setEvent(event: GameContract.Event) = viewModelScope.launch { _event.emit(event) }
-
-    private fun setState(reduce: GameContract.State.() -> GameContract.State) {
-        _uiState.value = uiState.value.reduce()
-    }
-
-    private fun setEffect(effect: () -> GameContract.Effect) {
-        viewModelScope.launch {
-            _effect.send(effect())
-        }
-    }
 
 }
 

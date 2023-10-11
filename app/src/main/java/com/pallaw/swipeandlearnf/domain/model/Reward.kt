@@ -3,7 +3,8 @@ package com.pallaw.swipeandlearnf.domain.model
 data class Reward(
     val count: Int = 0,
     val details: List<Detail> = emptyList(),
-    val type: Type?
+    val type: Type?,
+    val isRevealed: Boolean = false
 ) {
 
     enum class Type{

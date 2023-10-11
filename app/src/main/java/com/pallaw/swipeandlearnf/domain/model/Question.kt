@@ -1,6 +1,6 @@
-package com.pallaw.swipeandlearnf.data.model
+package com.pallaw.swipeandlearnf.domain.model
 
-data class QuestionDto(
+data class Question(
     val answer: Boolean,
     val hint: String,
     val question: String
