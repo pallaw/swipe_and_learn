@@ -1,4 +1,4 @@
-package com.pallaw.swipeandlearnf
+package com.pallaw.swipeandlearnf.ui.reward
 
 import android.os.Bundle
 import android.view.LayoutInflater

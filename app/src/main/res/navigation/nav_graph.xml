@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.pallaw.swipeandlearnf.GameFragment"
+        android:name="com.pallaw.swipeandlearnf.ui.game.GameFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_game">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
-        android:name="com.pallaw.swipeandlearnf.RewardsFragment"
+        android:name="com.pallaw.swipeandlearnf.ui.reward.RewardsFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_rewards">
 
