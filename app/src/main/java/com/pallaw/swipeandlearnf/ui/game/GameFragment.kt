@@ -83,8 +83,8 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
                     GameScreenContract.Effect.NavigateToRewards -> {
                         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                     }
+                    else ->{}
                 }
-
             }
         }
 
@@ -189,7 +189,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
             layoutManager.setDirections(listOf(Direction.Left, Direction.Right))
             object : CountDownTimer(30000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
-                    binding.countdownTv.text = timeCounter.toString()
+                    binding.countdownTv.text =( if(timeCounter < 0) 0 else timeCounter).toString()
                     timeCounter--
                 }
                 override fun onFinish() {

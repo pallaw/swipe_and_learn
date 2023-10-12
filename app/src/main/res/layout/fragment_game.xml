@@ -74,7 +74,7 @@
                 android:translationY="5dp"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/gilroy_bold"
-                android:text="55" />
+                android:text="2" />
 
 
         </LinearLayout>
