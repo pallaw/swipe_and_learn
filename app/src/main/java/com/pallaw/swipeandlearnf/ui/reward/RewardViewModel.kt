@@ -33,7 +33,9 @@ class RewardViewModel(
                 }
             }
 
-            is RewardScreenContract.Event.RewardClicked -> {}
+            is RewardScreenContract.Event.RewardClicked -> {
+                setEffect { RewardScreenContract.Effect.ShowRewardDialog(event.reward) }
+            }
         }
     }
 }
