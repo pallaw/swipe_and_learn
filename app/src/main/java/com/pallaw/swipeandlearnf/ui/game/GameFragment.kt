@@ -9,11 +9,9 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
-import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.databinding.FragmentGameBinding
@@ -26,17 +24,19 @@ import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeableMethod
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.lang.StringBuilder
 
 
 class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickListener {
 
     private var _binding: FragmentGameBinding? = null
-    private val adapter = QuestionsAdapter(listOf(
-        CardQuestionData(),
-        CardQuestionData(),
-        CardQuestionData(),
-        CardQuestionData(),),this )
+    private val adapter = QuestionsAdapter(
+        listOf(
+            CardQuestionData(),
+            CardQuestionData(),
+            CardQuestionData(),
+            CardQuestionData(),
+        ), this
+    )
 
     private lateinit var layoutManager: CardStackLayoutManager
 
@@ -72,8 +72,8 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
         }
 
         lifecycleScope.launch {
-            viewModel.effect.collect{ sideEffects ->
-                when(sideEffects) {
+            viewModel.effect.collect { sideEffects ->
+                when (sideEffects) {
                     GameScreenContract.Effect.NavigateToRewards -> {
                         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                     }
@@ -105,13 +105,13 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     }
 
     private fun showUiState(gameState: GameScreenContract.State) {
-        val previousText = binding.textviewFirst.text
-
-        binding.textviewFirst.text = StringBuilder().apply {
-            append(previousText)
-            append("\n\n")
-            append("$gameState")
-        }.toString()
+        //val previousText = binding.textviewFirst.text
+//
+//        binding.textviewFirst.text = StringBuilder().apply {
+//            append(previousText)
+//            append("\n\n")
+//            append("$gameState")
+//        }.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
