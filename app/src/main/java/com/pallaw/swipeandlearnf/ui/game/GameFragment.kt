@@ -82,6 +82,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
             viewModel.effect.collect { sideEffects ->
                 when (sideEffects) {
                     GameScreenContract.Effect.NavigateToRewards -> {
+                        countDown?.cancel()
                         findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
                     }
                     else ->{}
@@ -213,6 +214,8 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
                 override fun onFinish() {
                     binding.countdownTv.text = "0"
                     cardStack.swipe()
+                    binding.streakImg.isVisible = true
+                    binding.streakFire.isVisible = false
                     timeCounter = 0
                 }
             }.start()
