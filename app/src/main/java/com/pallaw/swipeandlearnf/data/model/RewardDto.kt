@@ -1,6 +1,7 @@
 package com.pallaw.swipeandlearnf.data.model
 
 data class RewardDto(
+    val id: Int,
     val count: Int,
     val details: List<Detail> = emptyList(),
     val type: String,

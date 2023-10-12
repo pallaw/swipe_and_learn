@@ -33,7 +33,20 @@ class RewardViewModel(
                 }
             }
 
-            is RewardScreenContract.Event.RewardClicked -> {}
+            is RewardScreenContract.Event.RewardClicked -> {
+                setEffect { RewardScreenContract.Effect.ShowRewardDialog(event.reward) }
+            }
+
+            is RewardScreenContract.Event.RewardRevealed -> {
+                setState {
+                    var updatedRewardList = this.rewards.toMutableList()
+                    updatedRewardList?.find { it.id == event.reward.id }?.isRevealed = true
+                    this.copy(
+                        rewards = updatedRewardList
+                    )
+                }
+                setEffect { RewardScreenContract.Effect.ShowMessage("Reward ${event.reward.id} revealed") }
+            }
         }
     }
 }

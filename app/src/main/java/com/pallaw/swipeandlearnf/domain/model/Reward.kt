@@ -1,10 +1,11 @@
 package com.pallaw.swipeandlearnf.domain.model
 
 data class Reward(
+    val id : Int,
     val count: Int = 0,
     val details: List<Detail> = emptyList(),
     val type: Type?,
-    val isRevealed: Boolean = false
+    var isRevealed: Boolean = false
 ) {
 
     enum class Type{

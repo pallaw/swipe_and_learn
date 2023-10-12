@@ -16,6 +16,7 @@ class FakeGameRepositoryImp : GameRepository {
                     streakCount = 5,
                     rewards = (1..5).map {
                         Reward(
+                            id = it,
                             count = (1..5).random(),
                             type = Reward.Type.DIAMOND
                         )
@@ -45,7 +46,9 @@ class FakeGameRepositoryImp : GameRepository {
             emit(
                 (1..10).map {
                     Reward(
+                        id = it,
                         count = (1..5).random(),
+                        isRevealed = listOf(true, false).random(),
                         type = listOf(
                             Reward.Type.DIAMOND,
                             Reward.Type.HINT,
@@ -61,6 +64,7 @@ class FakeGameRepositoryImp : GameRepository {
     override suspend fun getNewReward(streakCount: Int): Flow<RewardDto> {
         return flow {
             Reward(
+                id = (1..1000).random(),
                 count = (1..5).random(),
                 type = listOf(
                     Reward.Type.DIAMOND,

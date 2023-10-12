@@ -5,6 +5,7 @@ import com.pallaw.swipeandlearnf.domain.model.Reward
 
 fun RewardDto.toReward(): Reward{
     return Reward(
+        id = this.id,
         count = this.count,
         type = when(this.type) {
             "diamond" -> {Reward.Type.DIAMOND}
