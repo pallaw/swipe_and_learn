@@ -33,5 +33,6 @@ class GameScreenContract {
     // one time effects handled in UI
     sealed class Effect {
         object NavigateToRewards : Effect()
+        object NavigateToGameOver: Effect()
     }
 }

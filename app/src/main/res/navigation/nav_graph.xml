@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_gameoverFragment"
+            app:destination="@id/gameoverFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -25,4 +28,9 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/gameoverFragment"
+        android:name="com.pallaw.swipeandlearnf.ui.game.GameoverFragment"
+        android:label="fragment_gameover"
+        tools:layout="@layout/fragment_gameover" />
 </navigation>

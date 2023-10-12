@@ -1,24 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#F4F6FE"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.game.GameFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/stack_rl"
+        android:layout_marginBottom="50dp"
+        android:weightSum="3"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textview_first"
+
+        <LinearLayout
             android:layout_width="wrap_content"
+            android:id="@+id/countdown_ll"
             android:layout_height="wrap_content"
-            android:text="Game Fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/countdown_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="40dp"
+                android:background="@null"
+                app:srcCompat="@drawable/ic_count_down_timer" />
+
+            <TextView
+                android:id="@+id/countdown_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:translationY="5dp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/gilroy_bold"
+                android:text="60" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/diamond_ll"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/diamond_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:background="@null"
+                app:srcCompat="@drawable/ic_diamond" />
+
+            <TextView
+                android:id="@+id/hints_count_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:translationY="5dp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/gilroy_bold"
+                android:text="2" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/streak_ll"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/streak_img"
+                android:layout_width="24dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:background="@null"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/streak_img" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/streak_fire"
+                android:layout_width="24dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:visibility="gone"
+                android:background="@null"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/fire" />
+
+
+            <TextView
+                android:id="@+id/streak_count_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:translationY="5dp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/gilroy_bold"
+                android:text="5" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/stack_rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="#BDC7FE"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <com.yuyakaido.android.cardstackview.CardStackView
+        android:id="@+id/stack_view"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        />
+        <RelativeLayout
+            android:id="@+id/exit_rl"
+            android:visibility="gone"
+            android:layout_width="350dp"
+            android:layout_height="500dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/black"
+                android:fontFamily="@font/gilroy_bold"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:text="All Done "/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/restart_cta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1"
+        android:background="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stack_rl"
+        app:srcCompat="@drawable/restart_cta" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
