@@ -64,7 +64,6 @@
 
 
     </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/left_overlay"
         android:layout_width="match_parent"
@@ -76,6 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:tint="#FF0000"
             android:layout_centerInParent="true"
             app:srcCompat="@drawable/ic_false_overlay" />
         <TextView
@@ -91,7 +91,7 @@
             android:rotationX="20"
             android:layout_gravity="center"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="#FF0000"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -107,6 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:tint="#008000"
             android:background="@null"
             app:srcCompat="@drawable/correct_overlay" />
         <TextView
@@ -122,7 +123,7 @@
             android:rotationX="20"
             android:layout_gravity="center"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="#008000"
             android:textSize="22sp"
             android:textStyle="bold" />
 
