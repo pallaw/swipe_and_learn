@@ -1,7 +1,7 @@
 package com.pallaw.swipeandlearnf.ui.game
 
-import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -9,8 +9,8 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -23,9 +23,16 @@ import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
 import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeableMethod
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parameterSetOf
+import java.lang.String
+import kotlin.Boolean
+import kotlin.Float
+import kotlin.Int
+import kotlin.Long
+import kotlin.apply
+import kotlin.getValue
 
 
 class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickListener {
@@ -34,11 +41,14 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     private var adapter : QuestionsAdapter? = null
 
     private lateinit var layoutManager: CardStackLayoutManager
-
-
+    private var streakCount: Int = 0
+    private var timeCounter: Int = 60
+    private var currentPosition: Int = 0
     private val binding get() = _binding!!
     private val viewModel: GameViewModel by viewModel()
 
+    private var questionList : List<CardQuestionData> = emptyList()
+    private var correctAnswers : List<Boolean> = emptyList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -54,24 +64,16 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
 
     }
 
-    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var result = mutableListOf(
-            CardQuestionData(),
-            CardQuestionData(),
-            CardQuestionData(),
-            CardQuestionData(),
-        )
-        result.add(0, CardQuestionData(),)
-        result.add(element = CardQuestionData())
-        adapter = QuestionsAdapter(result, this)
         lifecycleScope.launch {
-            viewModel.uiState.collect { gameState ->
+            viewModel.uiState.collectLatest { gameState ->
                 showUiState(gameState)
             }
         }
+
 
         lifecycleScope.launch {
             viewModel.effect.collect { sideEffects ->
@@ -84,6 +86,26 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
             }
         }
 
+        binding.streakCountTv.text = streakCount.toString()
+    }
+
+    private fun showUiState(gameState: GameScreenContract.State) {
+        val questionList : MutableList<CardQuestionData> = gameState.questions.map {
+            CardQuestionData(it.question, it.answer, it.hint)
+        }.toMutableList()
+
+        correctAnswers = gameState.questions.map {
+            CardQuestionData(it.question, it.answer, it.hint)
+        }.map {
+            it.correctAnswer?:false
+        }
+
+        questionList.add(0, CardQuestionData())
+        this.questionList = questionList.toList()
+
+
+        adapter = QuestionsAdapter(questionList, this)
+
         layoutManager = CardStackLayoutManager(requireContext(), this).apply {
             setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
             setOverlayInterpolator(LinearInterpolator())
@@ -95,7 +117,6 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
         layoutManager.setScaleInterval(0.95f)
 
         layoutManager.setMaxDegree(40.0f)
-
         binding.stackView.layoutManager = layoutManager
         binding.stackView.adapter = adapter
         binding.stackView.itemAnimator.apply {
@@ -103,17 +124,6 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
                 supportsChangeAnimations = false
             }
         }
-
-    }
-
-    private fun showUiState(gameState: GameScreenContract.State) {
-        //val previousText = binding.textviewFirst.text
-//
-//        binding.textviewFirst.text = StringBuilder().apply {
-//            append(previousText)
-//            append("\n\n")
-//            append("$gameState")
-//        }.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -142,6 +152,21 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     }
 
     override fun onCardSwiped(direction: Direction?) {
+        timeCounter = 60
+        if(currentPosition == 0){
+            currentPosition+=1
+            return
+        }
+        if(correctAnswers.size == currentPosition) return
+        if(direction == Direction.Left) {
+            if(correctAnswers[currentPosition].not()) streakCount +=1
+            else streakCount = 0
+        }else if(direction == Direction.Right) {
+            if(correctAnswers[currentPosition].not()) streakCount +=1
+            else streakCount = 0
+        }
+        currentPosition+=1
+        binding.streakCountTv.text = streakCount.toString()
 
     }
 
@@ -152,11 +177,30 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     }
 
     override fun onCardAppeared(view: View?, position: Int) {
-        if(position == 0) layoutManager.setDirections(listOf(Direction.Right))
-        else layoutManager.setDirections(listOf(Direction.Left, Direction.Right,))
-    }
+
+        if(position == 0) {
+            layoutManager.setDirections(listOf(Direction.Right))
+        }
+        else {
+            layoutManager.setDirections(listOf(Direction.Left, Direction.Right))
+            object : CountDownTimer(30000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    binding.countdownTv.text = timeCounter.toString()
+                    timeCounter--
+                }
+
+                override fun onFinish() {
+                    binding.countdownTv.text = "0"
+                    layoutManager.setSwipeableMethod(SwipeableMethod.Automatic)
+
+                }
+            }.start()
+        }
+
+     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
+        binding.exitRl.isVisible = position == correctAnswers.size
     }
 
     override fun onCardClicked(contentData: CardQuestionData?, position: Int) {

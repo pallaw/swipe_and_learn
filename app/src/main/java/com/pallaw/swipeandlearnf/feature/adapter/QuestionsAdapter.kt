@@ -1,6 +1,7 @@
 package com.pallaw.swipeandlearnf.feature.adapter
 
 import android.app.Activity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +11,16 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
+import com.yuyakaido.android.cardstackview.CardStackListener
+import com.yuyakaido.android.cardstackview.Direction
 
 class QuestionsAdapter(
-    questionsData: List<CardQuestionData>,
+    private val questionsData: List<CardQuestionData>,
     cardClick: CardClickListener,
-) : RecyclerView.Adapter<QuestionsAdapter.CardQuestionVH>() {
-    private val questions: List<CardQuestionData>
+) : RecyclerView.Adapter<QuestionsAdapter.CardQuestionVH>()  {
     private val cardClick: CardClickListener
 
     init {
-        this.questions = questionsData
         this.cardClick = cardClick
     }
 
@@ -33,22 +34,20 @@ class QuestionsAdapter(
     }
 
     override fun onBindViewHolder(holder: CardQuestionVH, position: Int) {
-        //  val currentItem: VideoBookmarkData = videoBookmarkData[position]
-        // holder.questionNameTV.text = ""
         if (position == 0)
             showIntroCard(holder)
-        else
-            showQuestions(holder, position)
+        else if(position > 0){
+            showQuestions(holder)
+            holder.questionNameTV.text = questionsData[position].question
 
-//        if (position == questions.size)
+        }
     }
 
-    private fun showQuestions(holder: CardQuestionVH, position: Int) {
+    private fun showQuestions(holder: CardQuestionVH) {
         holder.questionIntroCard.isVisible = false
         holder.questionCards.isVisible = true
         holder.rightOverlay.isVisible = true
         holder.leftOverLay.isVisible = true
-        cardClick.onCardClicked(CardQuestionData(), position)
     }
 
     private fun showIntroCard(holder: CardQuestionVH) {
@@ -56,11 +55,10 @@ class QuestionsAdapter(
         holder.questionCards.isVisible = false
         holder.rightOverlay.isVisible = false
         holder.leftOverLay.isVisible = false
-        cardClick.onCardClicked(CardQuestionData(), 0)
     }
 
     override fun getItemCount(): Int {
-        return questions.size
+        return this.questionsData.size
     }
 
     class CardQuestionVH constructor(view: View) : RecyclerView.ViewHolder(view) {
@@ -71,7 +69,7 @@ class QuestionsAdapter(
         var rightOverlay: RelativeLayout
 
         init {
-            questionNameTV = view.findViewById(R.id.question_tv)
+            questionNameTV = view.findViewById(R.id. question_tv)
             questionIntroCard = view.findViewById(R.id.introduction_card)
             questionCards = view.findViewById(R.id.main_questions_card_rv)
             leftOverLay = view.findViewById(R.id.left_overlay)
