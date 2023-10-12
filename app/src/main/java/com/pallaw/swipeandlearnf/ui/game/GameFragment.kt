@@ -16,7 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.databinding.FragmentGameBinding
-import com.pallaw.swipeandlearnf.feature.adapter.QuestionsAdapter
 import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -27,7 +26,6 @@ import com.yuyakaido.android.cardstackview.SwipeableMethod
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.lang.String
 import kotlin.Boolean
 import kotlin.Float
 import kotlin.Int

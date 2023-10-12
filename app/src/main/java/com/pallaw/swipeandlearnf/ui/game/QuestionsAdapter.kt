@@ -1,7 +1,5 @@
-package com.pallaw.swipeandlearnf.feature.adapter
+package com.pallaw.swipeandlearnf.ui.game
 
-import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +9,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
-import com.yuyakaido.android.cardstackview.CardStackListener
-import com.yuyakaido.android.cardstackview.Direction
 
 class QuestionsAdapter(
     private val questionsData: List<CardQuestionData>,
