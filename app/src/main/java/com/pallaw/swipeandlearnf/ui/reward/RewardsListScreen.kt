@@ -1,5 +1,7 @@
 package com.pallaw.swipeandlearnf.ui.reward
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +12,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -20,11 +26,15 @@ import androidx.compose.ui.unit.sp
 import com.pallaw.swipeandlearnf.domain.model.Reward
 
 @Composable
-fun RewardsScreen(
+fun RewardsListScreen(
     state: RewardScreenContract.State = RewardScreenContract.State(),
     rewardClicked: (reward: Reward) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    var showCouponDialog by remember { mutableStateOf(false) }
+    var currentReward: Reward? by remember { mutableStateOf(null) }
+
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(
@@ -35,9 +45,19 @@ fun RewardsScreen(
         ),
         content = {
             items(state.rewards.size) {
-                ScratchCard(state.rewards[it], rewardClicked)
+                ScratchCard(state.rewards[it]) { clickedReward ->
+                    showCouponDialog = !showCouponDialog
+                    currentReward = clickedReward
+                }
             }
         })
+
+    AnimatedVisibility(visible = showCouponDialog) {
+        ScratchCouponDialog(reward = currentReward!!) {
+            showCouponDialog = !showCouponDialog
+        }
+    }
+
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -54,14 +74,17 @@ private fun ScratchCard(reward: Reward, cardClicked: (reward: Reward) -> Unit) {
             cardClicked.invoke(reward)
         }
     ) {
-        Text(
-            text = "$reward",
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
-            color = Color(0xFFFFFFFF),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(16.dp)
-        )
+        Box {
+
+            Text(
+                text = "$reward",
+                fontWeight = FontWeight.Bold,
+                fontSize = 30.sp,
+                color = Color(0xFFFFFFFF),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
     }
 }
 
@@ -69,7 +92,7 @@ private fun ScratchCard(reward: Reward, cardClicked: (reward: Reward) -> Unit) {
 @Composable
 private fun PreviewRewardsScreen() {
     val rewardList = (1..10).map { Reward(id = it, type = Reward.Type.SKIP) }
-    RewardsScreen(
+    RewardsListScreen(
         state = RewardScreenContract.State().copy(rewards = rewardList),
         rewardClicked = {}
     )

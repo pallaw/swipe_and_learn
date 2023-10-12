@@ -43,7 +43,7 @@ class RewardsFragment : Fragment() {
         composeView.setContent {
             MaterialTheme {
                 val rewardState by viewModel.uiState.collectAsState()
-                RewardsScreen(
+                RewardsListScreen(
                     state = rewardState,
                     rewardClicked = {
                         viewModel.setEvent(RewardScreenContract.Event.RewardClicked(it))
