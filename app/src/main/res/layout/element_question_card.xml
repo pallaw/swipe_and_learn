@@ -151,7 +151,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@null"
-            android:tint="#FF0000"
             app:srcCompat="@drawable/ic_false_overlay" />
 
         <TextView
@@ -167,7 +166,7 @@
             android:rotationX="20"
             android:text="False"
             android:textAlignment="center"
-            android:textColor="#FF0000"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -185,7 +184,6 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@null"
-            android:tint="#008000"
             app:srcCompat="@drawable/correct_overlay" />
 
         <TextView
@@ -201,7 +199,7 @@
             android:rotationX="20"
             android:text="True"
             android:textAlignment="center"
-            android:textColor="#008000"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
 

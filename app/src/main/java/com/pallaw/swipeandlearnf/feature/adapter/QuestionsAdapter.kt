@@ -13,14 +13,14 @@ import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
 
 class QuestionsAdapter(
     questionsData: List<CardQuestionData>,
-    videoClickListener: CardClickListener,
+    cardClick: CardClickListener,
 ) : RecyclerView.Adapter<QuestionsAdapter.CardQuestionVH>() {
     private val questions: List<CardQuestionData>
-    private val videoClickListener: CardClickListener
+    private val cardClick: CardClickListener
 
     init {
         this.questions = questionsData
-        this.videoClickListener = videoClickListener
+        this.cardClick = cardClick
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardQuestionVH {
@@ -38,16 +38,17 @@ class QuestionsAdapter(
         if (position == 0)
             showIntroCard(holder)
         else
-            showQuestions(holder)
+            showQuestions(holder, position)
 
 //        if (position == questions.size)
     }
 
-    private fun showQuestions(holder: CardQuestionVH) {
+    private fun showQuestions(holder: CardQuestionVH, position: Int) {
         holder.questionIntroCard.isVisible = false
         holder.questionCards.isVisible = true
         holder.rightOverlay.isVisible = true
         holder.leftOverLay.isVisible = true
+        cardClick.onCardClicked(CardQuestionData(), position)
     }
 
     private fun showIntroCard(holder: CardQuestionVH) {
@@ -55,6 +56,7 @@ class QuestionsAdapter(
         holder.questionCards.isVisible = false
         holder.rightOverlay.isVisible = false
         holder.leftOverLay.isVisible = false
+        cardClick.onCardClicked(CardQuestionData(), 0)
     }
 
     override fun getItemCount(): Int {
@@ -78,7 +80,7 @@ class QuestionsAdapter(
     }
 
     interface CardClickListener {
-        fun onVideoClicked(contentData: CardQuestionData?)
+        fun onCardClicked (contentData: CardQuestionData?, position : Int)
     }
 
 

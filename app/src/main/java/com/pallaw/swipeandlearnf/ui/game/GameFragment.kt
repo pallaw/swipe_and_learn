@@ -25,6 +25,7 @@ import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeableMethod
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parameterSetOf
 
 
 class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickListener {
@@ -151,12 +152,14 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     }
 
     override fun onCardAppeared(view: View?, position: Int) {
+        if(position == 0) layoutManager.setDirections(listOf(Direction.Right))
+        else layoutManager.setDirections(listOf(Direction.Left, Direction.Right,))
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
     }
 
-    override fun onVideoClicked(contentData: CardQuestionData?) {
+    override fun onCardClicked(contentData: CardQuestionData?, position: Int) {
     }
 
 }
