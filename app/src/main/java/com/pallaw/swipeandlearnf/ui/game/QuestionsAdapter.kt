@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.pallaw.swipeandlearnf.R
-import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
+import com.pallaw.swipeandlearnf.domain.model.Question
 
 class QuestionsAdapter(
-    private val questionsData: List<CardQuestionData>,
+    private val questionsData: List<Question>,
     cardClick: CardClickListener,
 ) : RecyclerView.Adapter<QuestionsAdapter.CardQuestionVH>()  {
     private val cardClick: CardClickListener
@@ -74,7 +74,7 @@ class QuestionsAdapter(
     }
 
     interface CardClickListener {
-        fun onCardClicked (contentData: CardQuestionData?, position : Int)
+        fun onCardClicked (contentData: Question?, position : Int)
     }
 
 
