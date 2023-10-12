@@ -44,4 +44,5 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="parallel_plate">In a parallel plate capacitor, increasing the distance between the plates increases the capacitnce</string>
+    <string name="intro_swiper">Swipe Right to Start</string>
 </resources>

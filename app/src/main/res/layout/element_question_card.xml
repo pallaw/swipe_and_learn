@@ -8,10 +8,12 @@
     app:cardCornerRadius="16dp">
 
     <RelativeLayout
+        android:id="@+id/main_questions_card_rv"
         android:layout_width="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:visibility="gone"
+        android:layout_alignParentEnd="true"
         android:background="#5A4BDA">
 
         <TextView
@@ -33,10 +35,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -64,64 +66,140 @@
 
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/introduction_card"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="#5A4BDA"
+        android:visibility="visible">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/intro_swipe_lottie"
+            android:layout_width="50dp"
+            android:layout_height="150dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/swipe_hand" />
+
+
+        <TextView
+            android:id="@+id/introduction_card_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="10dp"
+            android:fontFamily="@font/gilroy_bold"
+            android:text="@string/intro_swiper"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/introduction_card_tv_"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/introduction_card_tv"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/gilroy_bold"
+            android:text="or"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/intro_chapter_cta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/introduction_card_tv_"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/card_cta__2_" />
+
+
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/left_overlay"
         android:layout_width="match_parent"
-        android:background="#251E56"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#251E56">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/left_overlay_icb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:background="@null"
             android:tint="#FF0000"
-            android:layout_centerInParent="true"
             app:srcCompat="@drawable/ic_false_overlay" />
+
         <TextView
             android:id="@+id/left_overlay_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_centerInParent="true"
-            android:layout_marginTop="20dp"
             android:layout_below="@id/left_overlay_icb"
-            android:fontFamily="@font/gilroy_bold"
-            android:text="False"
-            android:rotationX="20"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/gilroy_bold"
+            android:rotationX="20"
+            android:text="False"
             android:textAlignment="center"
             android:textColor="#FF0000"
             android:textSize="22sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/right_overlay"
-        android:background="#251E56"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#251E56">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/right_overlay_icb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:tint="#008000"
             android:background="@null"
+            android:tint="#008000"
             app:srcCompat="@drawable/correct_overlay" />
+
         <TextView
             android:id="@+id/right_overlay_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/right_overlay_icb"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="20dp"
-            android:layout_centerInParent="true"
-            android:layout_below="@id/right_overlay_icb"
             android:fontFamily="@font/gilroy_bold"
-            android:text="True"
             android:rotationX="20"
-            android:layout_gravity="center"
+            android:text="True"
             android:textAlignment="center"
             android:textColor="#008000"
             android:textSize="22sp"

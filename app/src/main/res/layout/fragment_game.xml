@@ -2,10 +2,114 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#F4F6FE"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.game.GameFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/stack_view"
+        android:layout_marginBottom="50dp"
+        android:weightSum="3"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/countdown_ll"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/countdown_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:background="@null"
+                app:srcCompat="@drawable/ic_count_down_timer" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:translationY="5dp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/gilroy_bold"
+                android:text="60" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/diamond_ll"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/diamond_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:background="@null"
+                app:srcCompat="@drawable/ic_diamond" />
+
+            <TextView
+                android:id="@+id/hints_count_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:translationY="5dp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/gilroy_bold"
+                android:text="55" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/streak_ll"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/streak_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:background="@null"
+                app:srcCompat="@drawable/streak_img" />
+
+            <TextView
+                android:id="@+id/streak_count_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:translationY="5dp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/gilroy_bold"
+                android:text="5" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
     <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/stack_view"

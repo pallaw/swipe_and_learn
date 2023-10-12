@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -29,20 +30,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickListener {
 
     private var _binding: FragmentGameBinding? = null
-    private val adapter = QuestionsAdapter(
-        listOf(
-            CardQuestionData(),
-            CardQuestionData(),
-            CardQuestionData(),
-            CardQuestionData(),
-        ), this
-    )
+    private var adapter : QuestionsAdapter? = null
 
     private lateinit var layoutManager: CardStackLayoutManager
 
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
     private val viewModel: GameViewModel by viewModel()
 
@@ -65,6 +57,15 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var result = mutableListOf(
+            CardQuestionData(),
+            CardQuestionData(),
+            CardQuestionData(),
+            CardQuestionData(),
+        )
+        result.add(0, CardQuestionData(),)
+        result.add(element = CardQuestionData())
+        adapter = QuestionsAdapter(result, this)
         lifecycleScope.launch {
             viewModel.uiState.collect { gameState ->
                 showUiState(gameState)
