@@ -39,14 +39,13 @@ class RewardsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         composeView.setContent {
             MaterialTheme {
                 val rewardState by viewModel.uiState.collectAsState()
                 RewardsListScreen(
-                    state = rewardState,
-                    rewardClicked = {
-                        viewModel.setEvent(RewardScreenContract.Event.RewardClicked(it))
+                    rewardList = rewardState.rewards,
+                    onScratchCardRevealed = {
+                        viewModel.setEvent(RewardScreenContract.Event.RewardRevealed(it))
                     }
                 )
             }
@@ -56,9 +55,17 @@ class RewardsFragment : Fragment() {
             viewModel.effect.collect { sideEffects ->
                 when (sideEffects) {
                     is RewardScreenContract.Effect.ShowRewardDialog -> {
+//                        Toast.makeText(
+//                            context,
+//                            "Reward ${sideEffects.reward.id} Revealed",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+                    }
+
+                    is RewardScreenContract.Effect.ShowMessage -> {
                         Toast.makeText(
                             context,
-                            "Reward ${sideEffects.reward.id} clicked",
+                            sideEffects.msg,
                             Toast.LENGTH_LONG
                         ).show()
                     }

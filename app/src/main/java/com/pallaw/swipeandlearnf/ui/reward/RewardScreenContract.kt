@@ -6,6 +6,7 @@ class RewardScreenContract {
     // View actions
     sealed class Event {
         object GetUserRewards : Event()
+        data class RewardRevealed(val reward: Reward) : Event()
         data class RewardClicked(val reward: Reward) : Event()
     }
 
@@ -18,5 +19,6 @@ class RewardScreenContract {
     // one time effects handled in UI
     sealed class Effect {
         data class ShowRewardDialog(val reward: Reward) : Effect()
+        data class ShowMessage(val msg: String) : Effect()
     }
 }
