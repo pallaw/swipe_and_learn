@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.databinding.FragmentGameBinding
 import com.pallaw.swipeandlearnf.feature.adapter.QuestionsAdapter
+import com.pallaw.swipeandlearnf.feature.adapter.SubjectsAdapter
 import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -40,6 +41,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
 
     private var _binding: FragmentGameBinding? = null
     private var adapter : QuestionsAdapter? = null
+    private var subjectsAdapter : SubjectsAdapter? = null
 
     private lateinit var layoutManager: CardStackLayoutManager
     private lateinit var cardStack: CardStackView
@@ -208,7 +210,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
             layoutManager.setDirections(listOf(Direction.Left, Direction.Right))
             countDown = object : CountDownTimer(30000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
-                    binding.countdownTv.text =( if(timeCounter < 0) 0 else timeCounter).toString()
+                    binding.countdownTv.text =(if(timeCounter < 0) 0 else timeCounter).toString()
                     timeCounter--
                 }
                 override fun onFinish() {
