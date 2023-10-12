@@ -88,12 +88,26 @@
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/streak_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginStart="20dp"
                 android:background="@null"
+                android:scaleType="fitXY"
                 app:srcCompat="@drawable/streak_img" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/streak_fire"
+                android:layout_width="24dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:visibility="gone"
+                android:background="@null"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/fire" />
+
 
             <TextView
                 android:id="@+id/streak_count_tv"

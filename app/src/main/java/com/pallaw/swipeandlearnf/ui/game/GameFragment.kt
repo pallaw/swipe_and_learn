@@ -46,6 +46,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     private var streakCount: Int = 0
     private var timeCounter: Int = 60
     private var currentPosition: Int = 0
+    private var countDown: CountDownTimer? = null
     private val binding get() = _binding!!
     private val viewModel: GameViewModel by viewModel()
 
@@ -156,17 +157,34 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
 
     override fun onCardSwiped(direction: Direction?) {
         timeCounter = 60
+        countDown?.cancel()
         if(currentPosition == 0){
             currentPosition+=1
             return
         }
         if(correctAnswers.size == currentPosition) return
         if(direction == Direction.Left) {
-            if(correctAnswers[currentPosition].not()) streakCount +=1
-            else streakCount = 0
+            if(correctAnswers[currentPosition].not()){
+                streakCount +=1
+                binding.streakImg.isVisible = false
+                binding.streakFire.isVisible = true
+            }
+            else{
+                streakCount = 0
+                binding.streakImg.isVisible = true
+                binding.streakFire.isVisible = false
+            }
         }else if(direction == Direction.Right) {
-            if(correctAnswers[currentPosition].not()) streakCount +=1
-            else streakCount = 0
+            if(correctAnswers[currentPosition].not()) {
+                streakCount +=1
+                binding.streakImg.isVisible = false
+                binding.streakFire.isVisible = true
+            }
+            else{
+                streakCount = 0
+                binding.streakImg.isVisible = true
+                binding.streakFire.isVisible = false
+            }
         }
         currentPosition+=1
         binding.streakCountTv.text = streakCount.toString()
@@ -187,7 +205,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
         else {
             timeCounter = 60
             layoutManager.setDirections(listOf(Direction.Left, Direction.Right))
-            object : CountDownTimer(30000, 1000) {
+            countDown = object : CountDownTimer(30000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     binding.countdownTv.text =( if(timeCounter < 0) 0 else timeCounter).toString()
                     timeCounter--
