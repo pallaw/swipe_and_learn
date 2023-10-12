@@ -20,6 +20,7 @@ import com.pallaw.swipeandlearnf.feature.adapter.QuestionsAdapter
 import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
+import com.yuyakaido.android.cardstackview.CardStackView
 import com.yuyakaido.android.cardstackview.Direction
 import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeableMethod
@@ -41,6 +42,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     private var adapter : QuestionsAdapter? = null
 
     private lateinit var layoutManager: CardStackLayoutManager
+    private lateinit var cardStack: CardStackView
     private var streakCount: Int = 0
     private var timeCounter: Int = 60
     private var currentPosition: Int = 0
@@ -111,6 +113,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
             setOverlayInterpolator(LinearInterpolator())
         }
 
+        cardStack = binding.stackView
         layoutManager.setStackFrom(StackFrom.Bottom)
         layoutManager.setVisibleCount(3)
         layoutManager.setTranslationInterval(8.0f)
@@ -182,17 +185,17 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
             layoutManager.setDirections(listOf(Direction.Right))
         }
         else {
+            timeCounter = 60
             layoutManager.setDirections(listOf(Direction.Left, Direction.Right))
             object : CountDownTimer(30000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     binding.countdownTv.text = timeCounter.toString()
                     timeCounter--
                 }
-
                 override fun onFinish() {
                     binding.countdownTv.text = "0"
-                    layoutManager.setSwipeableMethod(SwipeableMethod.Automatic)
-
+                    cardStack.swipe()
+                    timeCounter = 0
                 }
             }.start()
         }
