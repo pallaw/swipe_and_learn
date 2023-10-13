@@ -157,6 +157,9 @@ class GameFragment : Fragment() {
                         answerForCurrentQuestion
                     ))
                 }
+                timeCounter = 60
+                countDown?.cancel()
+
 
 
 //                timeCounter = 60
@@ -200,6 +203,26 @@ class GameFragment : Fragment() {
             override fun onCardAppeared(view: View?, position: Int) {
                 currentCardPosition = position
                 Log.d("pallaw", "cardAppeared ${position}")
+                if (position > 0) {
+                    timeCounter = 60
+                    countDown = object : CountDownTimer(30000, 1000) {
+                        override fun onTick(millisUntilFinished: Long) {
+                            binding.countdownTv.text =
+                                (if (timeCounter < 0) 0 else timeCounter).toString()
+                            timeCounter--
+                        }
+
+                        override fun onFinish() {
+                            binding.countdownTv.text = "0"
+                            binding.questionCardStackView.swipe()
+                            binding.streakImg.isVisible = true
+                            binding.streakFire.isVisible = false
+                            resetGame()
+                            timeCounter = 0
+                        }
+                    }.start()
+
+                }
 //                if(position == 0) {
 //                    layoutManager.setDirections(listOf(Direction.Right))
 //                }
