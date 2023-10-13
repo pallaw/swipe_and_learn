@@ -35,7 +35,7 @@ class GameScreenContract {
     sealed class Effect {
         object NavigateToRewards : Effect()
         object NavigateToGameOver: Effect()
-        object ResetGame: Effect()
+        object GameOver: Effect()
         object SkipQuestion: Effect()
         data class ShowMsg(val msg: String): Effect()
     }

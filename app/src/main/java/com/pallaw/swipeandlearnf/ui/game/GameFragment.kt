@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.databinding.FragmentGameBinding
 import com.pallaw.swipeandlearnf.domain.model.Question
-import com.pallaw.swipeandlearnf.ui.sheets.ChapterSelectionBottomSheet
 import com.pallaw.swipeandlearnf.ui.sheets.RestartBottomSheet
 import com.pallaw.swipeandlearnf.ui.sheets.SubjectSelectionBottomSheet
 import com.pallaw.swipeandlearnf.ui.sheets.onFilterClick
@@ -109,7 +107,7 @@ class GameFragment : Fragment() {
                     is GameScreenContract.Effect.ShowMsg -> {
                        showMsg(sideEffects.msg)
                     }
-                    is GameScreenContract.Effect.ResetGame -> {
+                    is GameScreenContract.Effect.GameOver -> {
                         resetGame()
                     }
                     is GameScreenContract.Effect.SkipQuestion -> {
