@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Swipe &amp; Learn</string>
+    <string name="app_name">Re-wise</string>
     <string name="action_rewards">Rewards</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">Swipe &amp; Learn</string>
+    <string name="first_fragment_label">Re-wise</string>
     <string name="second_fragment_label">Rewards</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
