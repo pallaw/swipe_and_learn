@@ -18,6 +18,7 @@ import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.databinding.FragmentGameBinding
 import com.pallaw.swipeandlearnf.feature.adapter.QuestionsAdapter
 import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
+import com.pallaw.swipeandlearnf.domain.model.Question
 import com.pallaw.swipeandlearnf.ui.sheets.RestartBottomSheet
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -28,7 +29,6 @@ import com.yuyakaido.android.cardstackview.SwipeableMethod
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.lang.String
 import kotlin.Boolean
 import kotlin.Float
 import kotlin.Int
@@ -51,7 +51,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     private val binding get() = _binding!!
     private val viewModel: GameViewModel by viewModel()
 
-    private var questionList : List<CardQuestionData> = emptyList()
+    private var questionList : List<Question> = emptyList()
     private var correctAnswers : List<Boolean> = emptyList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,17 +100,13 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     }
 
     private fun showUiState(gameState: GameScreenContract.State) {
-        val questionList : MutableList<CardQuestionData> = gameState.questions.map {
-            CardQuestionData(it.question, it.answer, it.hint)
-        }.toMutableList()
+        val questionList : MutableList<Question> = gameState.questions.toMutableList()
 
         correctAnswers = gameState.questions.map {
-            CardQuestionData(it.question, it.answer, it.hint)
-        }.map {
-            it.correctAnswer?:false
+            it.answer ?: false
         }
 
-        questionList.add(0, CardQuestionData())
+        questionList.add(0, Question())
         this.questionList = questionList.toList()
 
 
@@ -234,8 +230,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
         binding.exitRl.isVisible = position == correctAnswers.size
     }
 
-    override fun onCardClicked(contentData: CardQuestionData?, position: Int) {
-
+    override fun onCardClicked(contentData: Question?, position: Int) {
     }
 
 }

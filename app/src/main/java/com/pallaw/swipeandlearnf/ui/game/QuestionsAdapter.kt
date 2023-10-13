@@ -1,7 +1,5 @@
-package com.pallaw.swipeandlearnf.feature.adapter
+package com.pallaw.swipeandlearnf.ui.game
 
-import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +18,10 @@ import com.pallaw.swipeandlearnf.ui.sheets.TYPE
 import com.pallaw.swipeandlearnf.ui.sheets.onFilterClick
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
+import com.pallaw.swipeandlearnf.domain.model.Question
 
 class QuestionsAdapter(
-    private val questionsData: List<CardQuestionData>,
+    private val questionsData: List<Question>,
     cardClick: CardClickListener,
     var manager: FragmentManager
 ) : RecyclerView.Adapter<QuestionsAdapter.CardQuestionVH>(), onFilterClick  {
@@ -111,7 +110,7 @@ class QuestionsAdapter(
     }
 
     interface CardClickListener {
-        fun onCardClicked (contentData: CardQuestionData?, position : Int)
+        fun onCardClicked (contentData: Question?, position : Int)
     }
 
     override fun setOnFilterClicked(list: List<String>) {}
