@@ -15,8 +15,6 @@ import com.pallaw.swipeandlearnf.ui.sheets.HintsBottomSheet
 import com.pallaw.swipeandlearnf.ui.sheets.SubjectSelectionBottomSheet
 import com.pallaw.swipeandlearnf.ui.sheets.TYPE
 import com.pallaw.swipeandlearnf.ui.sheets.onFilterClick
-import com.yuyakaido.android.cardstackview.CardStackListener
-import com.yuyakaido.android.cardstackview.Direction
 import com.pallaw.swipeandlearnf.domain.model.Question
 
 class QuestionsAdapter(

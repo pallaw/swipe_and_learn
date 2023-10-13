@@ -173,6 +173,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
             }
             else{
                 streakCount = 0
+
                 binding.streakImg.isVisible = true
                 binding.streakFire.isVisible = false
             }
@@ -224,6 +225,9 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
 
      }
 
+    private fun gameOver () {
+        findNavController().navigate(R.id.action_rewards)
+    }
     override fun onCardDisappeared(view: View?, position: Int) {
         binding.exitRl.isVisible = position == correctAnswers.size
     }

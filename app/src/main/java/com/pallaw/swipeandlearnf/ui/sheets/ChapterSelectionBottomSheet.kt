@@ -5,14 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.feature.adapter.SubjectsAdapter
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ChapterSelectionBottomSheet : BottomSheetDialogFragment(), onFilterClick {
 
-    private var subjectsAdapter : SubjectsAdapter? = null
+    private var subjectsAdapter: SubjectsAdapter? = null
+    private val viewModel: ChapterSubjectViewModel by viewModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,19 +43,22 @@ class ChapterSelectionBottomSheet : BottomSheetDialogFragment(), onFilterClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launch {
+            viewModel.uiState.collectLatest { listingState ->
+                showUiState(listingState)
+            }
+        }
+    }
 
-        val result = listOf(
-            "All",
-            "Physics",
-            "Chemistry",
-            "Maths",
-        )
-        subjectsAdapter = SubjectsAdapter(result, this)
-        val rcv = view.findViewById<RecyclerView>(R.id.chapter_filter_rcv)
-        view.findViewById<AppCompatImageView>(R.id.closeBottomSheetBtn).setOnClickListener {
+    private fun showUiState(chapterState: ChapterSubjectContract.State) {
+        if(chapterState.subjects.isEmpty()) return
+        val chapterListing = chapterState.subjects[0].chapters
+        subjectsAdapter = SubjectsAdapter(chapterListing, this)
+        val rcv = view?.findViewById<RecyclerView>(R.id.chapter_filter_rcv)
+        view?.findViewById<AppCompatImageView>(R.id.closeBottomSheetBtn)?.setOnClickListener {
             dismiss()
         }
-        rcv.adapter = subjectsAdapter
+        rcv?.adapter = subjectsAdapter
 
     }
 
