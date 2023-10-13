@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.pallaw.swipeandlearnf.base.BaseViewModel
 import com.pallaw.swipeandlearnf.domain.GameRepository
 import com.pallaw.swipeandlearnf.domain.model.Question
-import com.pallaw.swipeandlearnf.domain.model.Reward
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -81,7 +80,7 @@ class GameViewModel(
 
                 val question = uiState.value.questions[position]
                 if (question.answer == answer) {
-                    setEffect { GameScreenContract.Effect.ShowMsg("Right answer") }
+                    setEffect { GameScreenContract.Effect.ShowMsg("Answer is correct , streak increased") }
                     val newStreakCount = uiState.value.streakCount + 1
                     setState {
                         this.copy(
@@ -89,8 +88,8 @@ class GameViewModel(
                         )
                     }
                 } else {
-                    setEffect { GameScreenContract.Effect.ShowMsg("Wrong answer") }
-                    setEffect { GameScreenContract.Effect.ResetGame }
+                    setEffect { GameScreenContract.Effect.ShowMsg("Wrong answer, Game Over") }
+                    setEffect { GameScreenContract.Effect.GameOver }
                 }
             }
 
@@ -98,7 +97,7 @@ class GameViewModel(
                 val question = uiState.value.questions[event.currentPosition]
                 var hintCount = uiState.value.hintCount
                 if (hintCount > 0) {
-                    setEffect { GameScreenContract.Effect.ShowMsg("${question.hint}") }
+                    setEffect { GameScreenContract.Effect.ShowMsg("Hint: ${question.hint}") }
                     setState {
                         this.copy(
                             hintCount = --hintCount
