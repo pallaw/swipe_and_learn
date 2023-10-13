@@ -11,7 +11,7 @@ class GameScreenContract {
         class QuestionSwiped(val response: Boolean) : Event()
         object HintClicked : Event()
         object SkipClicked : Event()
-        object RestartClicked : Event()
+        object ResetGame : Event()
         object ChooseSubjectClicked : Event()
         object RewardClicked : Event()
         data class SubmitAnswer(val position: Int, val answer: Boolean) : Event()

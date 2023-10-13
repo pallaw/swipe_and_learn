@@ -3,6 +3,7 @@ package com.pallaw.swipeandlearnf.ui.game
 import androidx.lifecycle.viewModelScope
 import com.pallaw.swipeandlearnf.base.BaseViewModel
 import com.pallaw.swipeandlearnf.domain.GameRepository
+import com.pallaw.swipeandlearnf.domain.model.Question
 import com.pallaw.swipeandlearnf.domain.model.Reward
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
@@ -42,7 +43,17 @@ class GameViewModel(
 
             GameScreenContract.Event.HintClicked -> TODO()
             is GameScreenContract.Event.QuestionSwiped -> TODO()
-            GameScreenContract.Event.RestartClicked -> TODO()
+            GameScreenContract.Event.ResetGame -> {
+                val questions = uiState.value.questions
+                val newQuestions = arrayListOf<Question>()
+                newQuestions.addAll(questions)
+                setState {
+                    this.copy(
+                        streakCount = 0,
+                        questions = newQuestions
+                    )
+                }
+            }
             GameScreenContract.Event.RewardClicked -> {
                 setEffect { GameScreenContract.Effect.NavigateToRewards }
             }
@@ -71,6 +82,7 @@ class GameViewModel(
 
                 val question = uiState.value.questions[position]
                 if (question.answer == answer) {
+                    setEffect { GameScreenContract.Effect.ShowMsg("Right answer") }
                     val newStreakCount = uiState.value.streakCount + 1
                     setState {
                         this.copy(
@@ -78,6 +90,7 @@ class GameViewModel(
                         )
                     }
                 } else {
+                    setEffect { GameScreenContract.Effect.ShowMsg("Wrong answer") }
                     setEffect { GameScreenContract.Effect.ResetGame }
                 }
             }

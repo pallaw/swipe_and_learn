@@ -102,7 +102,7 @@ class GameFragment : Fragment() {
                        showMsg(sideEffects.msg)
                     }
                     is GameScreenContract.Effect.ResetGame -> {
-                        showMsg("reset game")
+                        resetGame()
                     }
                     else ->{}
                 }
@@ -272,6 +272,31 @@ class GameFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun startCountDown () {
+        timeCounter = 60
+        countDown = object : CountDownTimer(30000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                binding.countdownTv.text =(if(timeCounter < 0) 0 else timeCounter).toString()
+                timeCounter--
+            }
+            override fun onFinish() {
+                timeCounter = 0
+                binding.countdownTv.text = "0"
+                binding.questionCardStackView.swipe()
+            }
+        }.start()
+    }
+
+    private fun resetCountDown (){
+        timeCounter = 60
+        countDown?.cancel()
+    }
+
+    fun resetGame(){
+        resetCountDown()
+        viewModel.setEvent(GameScreenContract.Event.ResetGame)
     }
 
 

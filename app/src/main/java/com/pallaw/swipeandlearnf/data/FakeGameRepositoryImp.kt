@@ -14,7 +14,7 @@ class FakeGameRepositoryImp : GameRepository {
         return flow {
             emit(
                 UserData(
-                    streakCount = 5,
+                    streakCount = 0,
                     rewards = (1..5).map {
                         Reward(
                             id = it,
