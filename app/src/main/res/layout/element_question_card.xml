@@ -124,12 +124,25 @@
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/intro_chapter_cta"
+            android:id="@+id/intro_subject_cta"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/introduction_card_tv_"
             android:layout_centerInParent="true"
             android:layout_marginTop="25dp"
+            android:layout_weight="1"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/subject_cta" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/intro_chapter_cta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/intro_subject_cta"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="15dp"
             android:layout_weight="1"
             android:background="@null"
             app:layout_constraintEnd_toEndOf="parent"

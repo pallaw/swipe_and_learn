@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.databinding.FragmentGameBinding
 import com.pallaw.swipeandlearnf.feature.adapter.QuestionsAdapter
-import com.pallaw.swipeandlearnf.feature.adapter.SubjectsAdapter
 import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
+import com.pallaw.swipeandlearnf.ui.sheets.RestartBottomSheet
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.CardStackView
@@ -41,7 +41,6 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
 
     private var _binding: FragmentGameBinding? = null
     private var adapter : QuestionsAdapter? = null
-    private var subjectsAdapter : SubjectsAdapter? = null
 
     private lateinit var layoutManager: CardStackLayoutManager
     private lateinit var cardStack: CardStackView
@@ -93,6 +92,11 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
         }
 
         binding.streakCountTv.text = streakCount.toString()
+
+        binding.restartCta.setOnClickListener {
+            val restartSheet = RestartBottomSheet.newInstance()
+            restartSheet.show(requireFragmentManager(), restartSheet.javaClass.name)
+        }
     }
 
     private fun showUiState(gameState: GameScreenContract.State) {
@@ -110,7 +114,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
         this.questionList = questionList.toList()
 
 
-        adapter = QuestionsAdapter(questionList, this)
+        adapter = QuestionsAdapter(questionList, this, requireFragmentManager())
 
         layoutManager = CardStackLayoutManager(requireContext(), this).apply {
             setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
@@ -131,6 +135,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
                 supportsChangeAnimations = false
             }
         }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -230,6 +235,7 @@ class GameFragment : Fragment(), CardStackListener, QuestionsAdapter.CardClickLi
     }
 
     override fun onCardClicked(contentData: CardQuestionData?, position: Int) {
+
     }
 
 }

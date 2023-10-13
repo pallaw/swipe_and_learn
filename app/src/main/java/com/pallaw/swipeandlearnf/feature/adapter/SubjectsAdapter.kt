@@ -7,8 +7,9 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pallaw.swipeandlearnf.R
+import com.pallaw.swipeandlearnf.ui.sheets.onFilterClick
 
-class SubjectsAdapter constructor(private var subjectData: List<String>): RecyclerView.Adapter<SubjectsAdapter.SubjectsVH>()  {
+class SubjectsAdapter constructor(private var subjectData: List<String>, private var filterClick: onFilterClick): RecyclerView.Adapter<SubjectsAdapter.SubjectsVH>()  {
     private var selectedSubjects: ArrayList<String>? = null
     class SubjectsVH constructor(view: View) : RecyclerView.ViewHolder(view) {
         var filterName: TextView
@@ -38,6 +39,7 @@ class SubjectsAdapter constructor(private var subjectData: List<String>): Recycl
         holder.reviewCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
                 selectedSubjects?.add(subjectData[position])
+                filterClick.setOnFilterClicked(subjectData)
             }
         }
     }

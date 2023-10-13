@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout android:id="@+id/root_ll"
+    android:layout_width="wrap_content"
+    android:clickable="false"
+    android:focusable="false"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-    </data>
-
-    <LinearLayout
-        android:id="@+id/root_ll"
-        android:layout_width="wrap_content"
-        android:clickable="false"
-        android:focusable="false"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <View
             android:id="@+id/view_1"
@@ -32,8 +25,8 @@
             <CheckBox
                 android:id="@+id/review_checkbox"
                 android:layout_width="wrap_content"
-                android:buttonTint="#D0D5DD"
                 android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_selector_user_preference"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp" />
 
@@ -58,4 +51,3 @@
         </LinearLayout>
 
     </LinearLayout>
-</layout>

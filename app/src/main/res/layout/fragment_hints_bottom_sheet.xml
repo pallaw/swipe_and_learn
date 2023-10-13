@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.sheets.HintsBottomSheet">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/introduction_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="50dp"
+        android:background="@null"
+        app:srcCompat="@drawable/empty_box_1" />
+
+    <TextView
+        android:id="@+id/outOfContentTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/introduction_card"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/gilroy_bold"
+        android:text="Out of Hints !"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/accelerate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/outOfContentTV"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/gilroy_bold"
+        android:text="You get 3 hints everyday"
+        android:textColor="#414347"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/accelerate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accelerate"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/gilroy_bold"
+        android:text="No worries! Buy another hint for 1 diamond."
+        android:textColor="#414347"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/acce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accelerate2"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/gilroy_bold"
+        android:text="Diamonds left : 2"
+        android:textColor="#414347"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/acce"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="10dp"
+        android:weightSum="2"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/cancel_cta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@null"
+            app:srcCompat="@drawable/cancel_button" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/buy_now_cta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@null"
+            android:layout_marginStart="30dp"
+            app:srcCompat="@drawable/buy_now_cta" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
