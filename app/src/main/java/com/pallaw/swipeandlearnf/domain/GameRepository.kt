@@ -12,5 +12,5 @@ interface GameRepository {
     suspend fun getQuestions(): Flow<List<Question>>
     suspend fun getUserRewards(userId: Int): Flow<List<Reward>>
     suspend fun getNewReward(streakCount: Int) : Flow<RewardDto>
-    suspend fun getSubjectsAndChapters() : Flow<Subject>
+    suspend fun getSubjectsAndChapters() : Flow<List<Subject>>
 }

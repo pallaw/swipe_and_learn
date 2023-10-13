@@ -64,6 +64,23 @@ class GameViewModel(
                     }
                 }
             }
+
+            is GameScreenContract.Event.SubmitAnswer -> {
+                val position = event.position
+                val answer = event.answer
+
+                val question = uiState.value.questions[position]
+                if (question.answer == answer) {
+                    val newStreakCount = uiState.value.streakCount + 1
+                    setState {
+                        this.copy(
+                            streakCount = newStreakCount
+                        )
+                    }
+                } else {
+                    setEffect { GameScreenContract.Effect.ResetGame }
+                }
+            }
         }
     }
 

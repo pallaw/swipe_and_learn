@@ -13,7 +13,9 @@ import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.feature.adapter.SubjectsAdapter
 
 
-class SubjectSelectionBottomSheet : BottomSheetDialogFragment(), onFilterClick {
+class SubjectSelectionBottomSheet(
+
+) : BottomSheetDialogFragment(), onFilterClick {
 
     private var subjectsAdapter : SubjectsAdapter? = null
     private var onFilterClick: onFilterClick? = null

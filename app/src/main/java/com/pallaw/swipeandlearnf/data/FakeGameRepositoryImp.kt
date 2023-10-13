@@ -29,15 +29,18 @@ class FakeGameRepositoryImp : GameRepository {
 
     override suspend fun getQuestions(): Flow<List<Question>> {
         return flow {
+            val data = (1..10).map {
+                val answer = listOf(true, false).random()
+                Question(
+                    id = it,
+                    answer = answer,
+                    question = "Question no $it",
+                    hint = "Hint is $answer"
+                )
+            }.toMutableList()
+            data.add(0, Question())
             emit(
-                (1..10).map {
-                    val answer = listOf(true, false).random()
-                    Question(
-                        answer = answer,
-                        question = "Question no $it",
-                        hint = "Hint is $answer"
-                    )
-                }.toList()
+                data
             )
         }
     }
@@ -78,15 +81,17 @@ class FakeGameRepositoryImp : GameRepository {
         }
     }
 
-    override suspend fun getSubjectsAndChapters(): Flow<Subject> {
+    override suspend fun getSubjectsAndChapters(): Flow<List<Subject>> {
         return flow {
-            (1..10).map { subjectCounter ->
-                Subject(
-                    _id = "${subjectCounter}",
-                    name = "Subject ${subjectCounter}",
-                    chapters = (1..5).map { chapterCounter -> "Subject ${subjectCounter}, Chapter ${chapterCounter}" }
-                )
-            }
+            emit(
+                (1..10).map { subjectCounter ->
+                    Subject(
+                        _id = "${subjectCounter}",
+                        name = "Subject ${subjectCounter}",
+                        chapters = (1..5).map { chapterCounter -> "Subject ${subjectCounter}, Chapter ${chapterCounter}" }
+                    )
+                }
+            )
         }
     }
 }

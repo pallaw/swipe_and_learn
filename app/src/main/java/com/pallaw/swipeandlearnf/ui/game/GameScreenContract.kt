@@ -14,6 +14,7 @@ class GameScreenContract {
         object RestartClicked : Event()
         object ChooseSubjectClicked : Event()
         object RewardClicked : Event()
+        data class SubmitAnswer(val position: Int, val answer: Boolean) : Event()
 
     }
 
@@ -34,5 +35,7 @@ class GameScreenContract {
     sealed class Effect {
         object NavigateToRewards : Effect()
         object NavigateToGameOver: Effect()
+        object ResetGame: Effect()
+        data class ShowMsg(val msg: String): Effect()
     }
 }
