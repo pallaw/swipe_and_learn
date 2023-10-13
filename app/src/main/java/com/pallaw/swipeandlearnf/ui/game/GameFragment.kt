@@ -81,6 +81,14 @@ class GameFragment : Fragment() {
             restartSheet.show(requireFragmentManager(), restartSheet.javaClass.name)
         }
 
+        binding.hintBtn.setOnClickListener {
+            viewModel.setEvent(GameScreenContract.Event.HintClicked(currentCardPosition))
+        }
+
+        binding.skipBtn.setOnClickListener {
+            viewModel.setEvent(GameScreenContract.Event.SkipClicked(currentCardPosition))
+        }
+
     }
 
     private fun addObservers() {
@@ -104,6 +112,9 @@ class GameFragment : Fragment() {
                     is GameScreenContract.Effect.ResetGame -> {
                         resetGame()
                     }
+                    is GameScreenContract.Effect.SkipQuestion -> {
+                        binding.questionCardStackView.swipe()
+                    }
                     else ->{}
                 }
             }
@@ -115,6 +126,8 @@ class GameFragment : Fragment() {
         //show diamonds
         binding.hintsCountTv.text = "${gameState.diamondsCount}"
         binding.streakCountTv.text = "${gameState.streakCount}"
+        binding.hintBtn.text = "Hint: ${gameState.hintCount}"
+        binding.skipBtn.text = "Skip: ${gameState.skipCount}"
 
         //update question card
         val questionList : List<Question> = gameState.questions
@@ -137,11 +150,13 @@ class GameFragment : Fragment() {
 
             override fun onCardSwiped(direction: Direction?) {
                 Log.d("pallaw", "onCardSwiped ${direction}")
-                val answerForCurrentQuestion = direction == Direction.Right
-                viewModel.setEvent(GameScreenContract.Event.SubmitAnswer(
-                    currentCardPosition,
-                    answerForCurrentQuestion
-                ))
+                if (currentCardPosition != 0) {
+                    val answerForCurrentQuestion = direction == Direction.Right
+                    viewModel.setEvent(GameScreenContract.Event.SubmitAnswer(
+                        currentCardPosition,
+                        answerForCurrentQuestion
+                    ))
+                }
 
 
 //                timeCounter = 60

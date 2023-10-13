@@ -41,7 +41,6 @@ class GameViewModel(
                 }
             }
 
-            GameScreenContract.Event.HintClicked -> TODO()
             is GameScreenContract.Event.QuestionSwiped -> TODO()
             GameScreenContract.Event.ResetGame -> {
                 val questions = uiState.value.questions
@@ -58,7 +57,6 @@ class GameViewModel(
                 setEffect { GameScreenContract.Effect.NavigateToRewards }
             }
 
-            GameScreenContract.Event.SkipClicked -> TODO()
             GameScreenContract.Event.GetUserData -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     gameRepository.getUserData().collectLatest { userData ->
@@ -66,8 +64,9 @@ class GameViewModel(
                             setState {
                                 this.copy(
                                     loading = false,
-                                    diamondsCount = userData.rewards.filter { it.type == Reward.Type.DIAMOND }
-                                        .sumOf { it.count },
+                                    diamondsCount = userData.diamondCount,
+                                    hintCount = userData.hintCount,
+                                    skipCount = userData.skipCount,
                                     streakCount = userData.streakCount
                                 )
                             }
@@ -92,6 +91,32 @@ class GameViewModel(
                 } else {
                     setEffect { GameScreenContract.Effect.ShowMsg("Wrong answer") }
                     setEffect { GameScreenContract.Effect.ResetGame }
+                }
+            }
+
+            is GameScreenContract.Event.HintClicked -> {
+                val question = uiState.value.questions[event.currentPosition]
+                var hintCount = uiState.value.hintCount
+                if (hintCount > 0) {
+                    setEffect { GameScreenContract.Effect.ShowMsg("${question.hint}") }
+                    setState {
+                        this.copy(
+                            hintCount = --hintCount
+                        )
+                    }
+                } else {
+                    setEffect { GameScreenContract.Effect.ShowMsg("You are out of hint") }
+                }
+            }
+
+            is GameScreenContract.Event.SkipClicked -> {
+                var skipCount = uiState.value.skipCount
+                if (skipCount > 0) {
+                    setEffect { GameScreenContract.Effect.SkipQuestion }
+                    setEffect { GameScreenContract.Effect.ShowMsg("Question skipped") }
+                    setState { this.copy(skipCount = --skipCount) }
+                } else {
+                    setEffect { GameScreenContract.Effect.ShowMsg("You are out of skips") }
                 }
             }
         }

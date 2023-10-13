@@ -1,7 +1,12 @@
 package com.pallaw.swipeandlearnf.data
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.pallaw.swipeandlearnf.data.model.QuestionDto
+import com.pallaw.swipeandlearnf.data.model.QuestionsResponse
 import com.pallaw.swipeandlearnf.data.model.RewardDto
 import com.pallaw.swipeandlearnf.domain.GameRepository
+import com.pallaw.swipeandlearnf.domain.mapper.toQuestion
 import com.pallaw.swipeandlearnf.domain.model.Question
 import com.pallaw.swipeandlearnf.domain.model.Reward
 import com.pallaw.swipeandlearnf.domain.model.Subject
@@ -15,6 +20,9 @@ class FakeGameRepositoryImp : GameRepository {
             emit(
                 UserData(
                     streakCount = 0,
+                    hintCount = 10,
+                    skipCount = 5,
+                    diamondCount = 50,
                     rewards = (1..5).map {
                         Reward(
                             id = it,
@@ -28,19 +36,10 @@ class FakeGameRepositoryImp : GameRepository {
     }
 
     override suspend fun getQuestions(): Flow<List<Question>> {
+        val questionResponse: QuestionsResponse = Gson().fromJson(questionResponse, QuestionsResponse::class.java)
         return flow {
-            val data = (1..10).map {
-                val answer = listOf(true, false).random()
-                Question(
-                    id = it,
-                    answer = answer,
-                    question = "Question no $it",
-                    hint = "Hint is $answer"
-                )
-            }.toMutableList()
-            data.add(0, Question())
             emit(
-                data
+                questionResponse.data.map { it.toQuestion() }
             )
         }
     }

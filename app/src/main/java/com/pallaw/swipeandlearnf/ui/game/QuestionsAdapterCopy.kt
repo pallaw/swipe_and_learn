@@ -53,6 +53,8 @@ class QuestionsAdapterNew(
                 showQuestionCard()
             }
 
+            binding.questionTv.text = currentQuestion.question ?: ""
+
         }
 
         private fun showQuestionCard() {

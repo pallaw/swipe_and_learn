@@ -9,8 +9,8 @@ class GameScreenContract {
         object GetUserData : Event()
         object GetQuestions : Event()
         class QuestionSwiped(val response: Boolean) : Event()
-        object HintClicked : Event()
-        object SkipClicked : Event()
+        data class HintClicked(val currentPosition: Int) : Event()
+        data class SkipClicked(val currentPosition: Int) : Event()
         object ResetGame : Event()
         object ChooseSubjectClicked : Event()
         object RewardClicked : Event()
@@ -36,6 +36,7 @@ class GameScreenContract {
         object NavigateToRewards : Effect()
         object NavigateToGameOver: Effect()
         object ResetGame: Effect()
+        object SkipQuestion: Effect()
         data class ShowMsg(val msg: String): Effect()
     }
 }
