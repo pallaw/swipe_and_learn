@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.pallaw.swipeandlearnf.R
-import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
 import com.pallaw.swipeandlearnf.ui.sheets.ChapterSelectionBottomSheet
 import com.pallaw.swipeandlearnf.ui.sheets.HintsBottomSheet
 import com.pallaw.swipeandlearnf.ui.sheets.SubjectSelectionBottomSheet

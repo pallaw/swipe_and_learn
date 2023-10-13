@@ -16,8 +16,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.pallaw.swipeandlearnf.R
 import com.pallaw.swipeandlearnf.databinding.FragmentGameBinding
-import com.pallaw.swipeandlearnf.feature.adapter.QuestionsAdapter
-import com.pallaw.swipeandlearnf.feature.data.CardQuestionData
 import com.pallaw.swipeandlearnf.domain.model.Question
 import com.pallaw.swipeandlearnf.ui.sheets.RestartBottomSheet
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
