@@ -1,6 +1,6 @@
-package com.pallaw.swipeandlearnf.data.model
+package com.pallaw.swipeandlearnf.domain.model
 
-data class SubjectDto(
+data class Subject(
     val _id: String,
     val chapters: List<String>,
     val name: String

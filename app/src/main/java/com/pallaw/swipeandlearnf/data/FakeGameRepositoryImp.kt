@@ -4,6 +4,7 @@ import com.pallaw.swipeandlearnf.data.model.RewardDto
 import com.pallaw.swipeandlearnf.domain.GameRepository
 import com.pallaw.swipeandlearnf.domain.model.Question
 import com.pallaw.swipeandlearnf.domain.model.Reward
+import com.pallaw.swipeandlearnf.domain.model.Subject
 import com.pallaw.swipeandlearnf.domain.model.UserData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -74,6 +75,18 @@ class FakeGameRepositoryImp : GameRepository {
                 ).random(),
                 isRevealed = listOf(true, false).random()
             )
+        }
+    }
+
+    override suspend fun getSubjectsAndChapters(): Flow<Subject> {
+        return flow {
+            (1..10).map { subjectCounter ->
+                Subject(
+                    _id = "${subjectCounter}",
+                    name = "Subject ${subjectCounter}",
+                    chapters = (1..5).map { chapterCounter -> "Subject ${subjectCounter}, Chapter ${chapterCounter}" }
+                )
+            }
         }
     }
 }
